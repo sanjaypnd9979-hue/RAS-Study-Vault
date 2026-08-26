@@ -3,187 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>RAS Study Vault</title>
 
 <style>
-*{box-sizing:border-box}
-
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
-  color:#172033;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
 }
 
-header{
-  background:linear-gradient(135deg,#172554,#2563eb);
-  color:white;
-  padding:40px 20px;
-  text-align:center;
+.header{
+    background:#1456c3;
+    color:white;
+    padding:30px;
+    text-align:center;
 }
-
-header h1{margin:0;font-size:34px}
-header p{font-size:17px}
 
 .container{
-  max-width:1100px;
-  margin:auto;
-  padding:25px 18px;
-}
-
-.progress-box{
-  background:white;
-  padding:22px;
-  border-radius:16px;
-  margin-bottom:30px;
-  box-shadow:0 3px 12px #0002;
-}
-
-.progress{
-  height:16px;
-  background:#e5e7eb;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  width:0%;
-  height:100%;
-  background:#2563eb;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:18px;
+    max-width:1000px;
+    margin:30px auto;
+    padding:15px;
 }
 
 .card{
-  background:white;
-  padding:22px;
-  border-radius:16px;
-  box-shadow:0 3px 12px #0002;
+    background:white;
+    padding:25px;
+    margin-bottom:20px;
+    border-radius:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
 }
 
-.card h2{margin-top:0}
-
-.card p{
-  color:#64748b;
-  min-height:40px;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
 }
 
-.btn{
-  display:inline-block;
-  background:#2563eb;
-  color:white;
-  padding:10px 16px;
-  border-radius:8px;
-  text-decoration:none;
+.box{
+    display:block;
+    padding:25px;
+    background:#eef4ff;
+    border-radius:12px;
+    text-decoration:none;
+    color:#172033;
+    font-weight:bold;
+    text-align:center;
 }
 
-.section{
-  margin-top:35px;
-  margin-bottom:18px;
+.box:hover{
+    background:#dce9ff;
+}
+
+.button{
+    display:inline-block;
+    padding:12px 20px;
+    background:#1456c3;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
 }
 
 footer{
-  text-align:center;
-  padding:35px;
-  color:#64748b;
+    text-align:center;
+    padding:25px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>📚 RAS Study Vault</h1>
-<p>RPSC RAS Preparation Dashboard</p>
-</header>
+<div class="header">
+    <h1>📚 RAS Study Vault</h1>
+    <p>RPSC RAS Preparation Dashboard</p>
+</div>
 
 <div class="container">
 
-<div class="progress-box">
-<h2>🎯 Preparation Progress</h2>
-<p>RAS preparation ka overall progress</p>
-
-<div class="progress">
-<div class="progress-bar"></div>
-</div>
-
-<p>Progress: 0%</p>
-</div>
-
-<h2 class="section">📖 Study Center</h2>
+<div class="card">
+<h2>📊 Study Dashboard</h2>
 
 <div class="grid">
 
-<div class="card">
-<h2>📚 RAS Syllabus</h2>
-<p>Complete syllabus aur syllabus tracker.</p>
-<a class="btn" href="08-Syllabus-Tracker/">Open</a>
+<a class="box" href="01-Syllabus-Tracker/">
+📋 RAS Syllabus
+</a>
+
+<a class="box" href="02-Daily-Timetable/">
+⏰ Daily Timetable
+</a>
+
+<a class="box" href="03-PYQ-Master/">
+📝 PYQ Master
+</a>
+
+<a class="box" href="04-Mock-Tests/">
+🎯 Mock Tests
+</a>
+
+<a class="box" href="05-Study-Material/">
+📚 Study Material
+</a>
+
+<a class="box" href="09-Jaap-Naam/">
+🙏 Naam Jaap
+</a>
+
+</div>
 </div>
 
 <div class="card">
-<h2>📝 PYQ Master</h2>
-<p>Previous Year Questions aur analysis.</p>
-<a class="btn" href="05-PYQ-Master/">Open</a>
-</div>
 
-<div class="card">
-<h2>🧪 Mock Tests</h2>
-<p>Practice aur mock test material.</p>
-<a class="btn" href="06-Mock-Tests/">Open</a>
-</div>
+<h2>🙏 Naam Jaap Target</h2>
 
-<div class="card">
-<h2>🗓️ Daily Dashboard</h2>
-<p>Daily study planning aur timetable.</p>
-<a class="btn" href="00-Dashboard/">Open</a>
-</div>
+<p><b>Lifetime Goal:</b> 4,00,00,000</p>
 
-<div class="card">
-<h2>📖 Study Material</h2>
-<p>RAS preparation ki files aur notes.</p>
-<a class="btn" href="docs/">Open</a>
-</div>
+<p><b>35 साल का लक्ष्य</b></p>
 
-<div class="card">
-<h2>📊 Syllabus Tracker</h2>
-<p>Topics ko complete mark karne ke liye.</p>
-<a class="btn" href="08-Syllabus-Tracker/">Track</a>
-</div>
+<p><b>Daily Target:</b> 3,200 नाम</p>
 
-</div>
-
-<h2 class="section">🏆 Topper Mode</h2>
-
-<div class="grid">
-
-<div class="card">
-<h2>🎯 High Priority</h2>
-<p>Important topics par focused preparation.</p>
-<a class="btn" href="08-Syllabus-Tracker/">View</a>
-</div>
-
-<div class="card">
-<h2>🧠 PYQ Analysis</h2>
-<p>Questions ke pattern aur important areas.</p>
-<a class="btn" href="05-PYQ-Master/">Analyze</a>
-</div>
-
-<div class="card">
-<h2>🔥 Mock Practice</h2>
-<p>Regular test practice.</p>
-<a class="btn" href="06-Mock-Tests/">Practice</a>
-</div>
+<a class="button" href="09-Jaap-Naam/">
+Naam Jaap Counter खोलें
+</a>
 
 </div>
 
 </div>
 
 <footer>
-RAS Study Vault • RPSC RAS Preparation
+RAS Study Vault
 </footer>
 
 </body>
