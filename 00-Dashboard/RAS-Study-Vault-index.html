@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAS Study Vault</title>
+<style>
+:root{--bg:#0f172a;--card:#172033;--card2:#1e293b;--text:#f8fafc;--muted:#a7b0c0;--accent:#60a5fa;--ok:#34d399;--warn:#fbbf24;--danger:#fb7185}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+header{padding:22px 18px;background:linear-gradient(135deg,#111827,#1e3a8a);position:sticky;top:0;z-index:5}
+h1{margin:0;font-size:25px}header p{margin:5px 0 0;color:#cbd5e1}
+nav{display:flex;gap:8px;overflow:auto;padding:10px;background:#111827;position:sticky;top:84px;z-index:4}
+nav button{white-space:nowrap;border:0;border-radius:10px;padding:10px 13px;background:#263247;color:white;cursor:pointer}
+nav button.active{background:var(--accent);color:#07111f;font-weight:700}
+main{max-width:1100px;margin:auto;padding:16px}.tab{display:none}.tab.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid #2b3850;border-radius:15px;padding:15px;margin-bottom:12px}
+.card h2,.card h3{margin:0 0 8px}.muted{color:var(--muted)}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#263247;color:#cbd5e1;font-size:12px;margin:2px}
+.badge.a{background:#3f1d2e;color:#fecdd3}.badge.b{background:#3b2f12;color:#fde68a}.badge.c{background:#12352d;color:#a7f3d0}
+button.primary{background:var(--accent);border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}
+button.secondary{background:#334155;color:#fff;border:0;border-radius:10px;padding:9px 12px;cursor:pointer}
+.progress{height:10px;background:#263247;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--ok);width:0}
+.task{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #2b3850}.task:last-child{border-bottom:0}
+.task input{width:20px;height:20px}.source{font-size:13px;color:#bfdbfe}
+.mcq{padding:15px;border:1px solid #334155;border-radius:13px;margin:12px 0;background:var(--card2)}
+.option{display:block;width:100%;text-align:left;margin:7px 0;padding:10px;border:1px solid #475569;border-radius:9px;background:#0f172a;color:white;cursor:pointer}
+.option.correct{border-color:var(--ok);background:#12352d}.option.wrong{border-color:var(--danger);background:#3f1d2e}
+#score{font-size:22px;font-weight:800}.small{font-size:13px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.two{grid-template-columns:1fr}}
+a{color:#93c5fd}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎯 RAS Study Vault</h1>
+  <p>आज क्या पढ़ना है → कहाँ से पढ़ना है → MCQ → गलतियाँ → Revision → Progress</p>
+</header>
+<nav>
+<button class="active" onclick="showTab('today',this)">🏠 आज</button>
+<button onclick="showTab('study',this)">📚 कहाँ पढ़ें</button>
+<button onclick="showTab('mcq',this)">📝 MCQ</button>
+<button onclick="showTab('pyq',this)">📜 PYQ</button>
+<button onclick="showTab('tracker',this)">📊 Tracker</button>
+</nav>
+<main>
+
+<section id="today" class="tab active">
+<div class="card">
+<h2>🔥 आज का Mission</h2>
+<p class="muted">यह starter plan है। हर topic पूरा होने पर checkbox लगाओ।</p>
+<div class="progress"><div id="todayBar" class="bar"></div></div>
+<p><span id="todayDone">0</span>/6 tasks complete</p>
+<div id="tasks"></div>
+</div>
+<div class="grid">
+<div class="card"><h3>⏱️ Study Rule</h3><p>50 मिनट पढ़ाई + 10 मिनट break. हर block के अंत में 10–15 मिनट active recall.</p></div>
+<div class="card"><h3>🎯 MCQ Rule</h3><p>Topic पढ़ने के बाद पहले बिना देखे MCQ करो। गलत प्रश्न को “गलती कॉपी” में डालो।</p></div>
+<div class="card"><h3>🔄 Revision Rule</h3><p>गलत/भूले हुए points: उसी दिन, 3 दिन बाद और 7 दिन बाद revise करो.</p></div>
+</div>
+</section>
+
+<section id="study" class="tab">
+<div class="card">
+<h2>📚 कहाँ पढ़ें?</h2>
+<p class="muted">पहले syllabus तय करो, फिर एक primary source और एक revision source रखो।</p>
+<div class="grid">
+<div class="card"><h3>🇮🇳 भारतीय इतिहास</h3><span class="badge a">A</span><p>NCERT + एक standard history book. पहले syllabus headings और PYQ के अनुसार पढ़ो.</p><p class="source">Source: NCERT History → standard book → PYQ</p></div>
+<div class="card"><h3>🏛️ भारतीय राजव्यवस्था</h3><span class="badge a">A</span><p>NCERT basics → standard Polity book → संविधान के मूल अनुच्छेद/संस्थाएँ → PYQ.</p><p class="source">Source: NCERT + standard Polity text + official Constitution material</p></div>
+<div class="card"><h3>🏜️ राजस्थान</h3><span class="badge a">A</span><p>राजस्थान इतिहास, कला-संस्कृति, भूगोल, अर्थव्यवस्था और समसामयिकी को syllabus/PYQ से map करो.</p><p class="source">Source: Rajasthan-specific standard books + official Rajasthan sources + PYQ</p></div>
+<div class="card"><h3>🌍 भूगोल</h3><span class="badge b">B</span><p>NCERT Geography → maps/atlas → Rajasthan/India applications → PYQ.</p><p class="source">Source: NCERT + Atlas + PYQ</p></div>
+<div class="card"><h3>🔬 General Science</h3><span class="badge b">B</span><p>NCERT basics → current applications → environment/science-tech notes → PYQ.</p><p class="source">Source: NCERT + current affairs + PYQ</p></div>
+<div class="card"><h3>🧠 Mental Ability</h3><span class="badge b">B</span><p>Concept सीखो → timed practice → गलत questions की repeat practice.</p><p class="source">Source: topic-wise practice + PYQ</p></div>
+</div>
+<p><a href="https://rpsc.rajasthan.gov.in/" target="_blank">RPSC official website</a> — syllabus/notifications के लिए primary reference.</p>
+</div>
+</section>
+
+<section id="mcq" class="tab">
+<div class="card">
+<h2>📝 Topic MCQ Drill</h2>
+<p class="muted">ये original starter questions हैं। असली PYQ को अलग PYQ section में रखो।</p>
+<div id="quiz"></div>
+<div class="two"><button class="primary" onclick="resetQuiz()">फिर से शुरू करें</button><div id="score"></div></div>
+</div>
+</section>
+
+<section id="pyq" class="tab">
+<div class="card">
+<h2>📜 PYQ Master</h2>
+<p>हर PYQ को केवल answer के लिए नहीं, बल्कि <b>topic + concept + repeat pattern</b> के लिए analyse करो.</p>
+<div class="grid">
+<div class="card"><h3>A — बार-बार</h3><p>जो theme कई वर्षों में दोहराई गई हो। पहले तैयार करो.</p></div>
+<div class="card"><h3>B — महत्वपूर्ण</h3><p>एक-दो बार पूछा गया या syllabus में core area.</p></div>
+<div class="card"><h3>C — Low ROI</h3><p>कम repetition और कम conceptual value वाले हिस्से—अंत में.</p></div>
+</div>
+<p class="muted">PYQ entry format: Year → Subject → Topic → Question type → Correct concept → Mistake → Revision date.</p>
+</div>
+</section>
+
+<section id="tracker" class="tab">
+<div class="card">
+<h2>📊 Progress Tracker</h2>
+<div class="grid">
+<div><h3>Tasks</h3><div class="progress"><div id="taskBar" class="bar"></div></div><p id="taskStat"></p></div>
+<div><h3>MCQ accuracy</h3><div class="progress"><div id="mcqBar" class="bar"></div></div><p id="mcqStat"></p></div>
+</div>
+<button class="secondary" onclick="clearData()">Reset local progress</button>
+<p class="small muted">Progress इस browser में localStorage में save होता है। Browser/device बदलने पर यह data अपने आप transfer नहीं होगा.</p>
+</div>
+</section>
+
+</main>
+<script>
+const tasks=[
+["राजस्थान इतिहास/कला-संस्कृति","90 min","Syllabus headings + standard notes","A"],
+["भारतीय राजव्यवस्था","90 min","Constitution basics + core institutions","A"],
+["भारत/राजस्थान भूगोल","60 min","NCERT concepts + map practice","B"],
+["General Science","60 min","NCERT basics + applications","B"],
+["Topic MCQ","45 min","20–30 questions; गलतियों को mark करो","A"],
+["गलत MCQ Revision","30 min","आज की mistakes बिना notes देखे recall करो","A"]
+];
+let state=JSON.parse(localStorage.getItem("rasVault")||'{"done":[],"attempted":0,"correct":0}');
+function save(){localStorage.setItem("rasVault",JSON.stringify(state));render()}
+function render(){
+const box=document.getElementById("tasks"); box.innerHTML="";
+tasks.forEach((t,i)=>{const d=document.createElement("div");d.className="task";d.innerHTML=`<input type="checkbox" ${state.done.includes(i)?"checked":""} onchange="toggleTask(${i})"><div><b>${i+1}. ${t[0]}</b> <span class="badge ${t[3].toLowerCase()}">${t[3]}</span><div class="muted">${t[1]} · ${t[2]}</div></div>`;box.appendChild(d)});
+const n=state.done.length; document.getElementById("todayDone").textContent=n; document.getElementById("todayBar").style.width=(n/6*100)+"%";
+document.getElementById("taskBar").style.width=(n/6*100)+"%"; document.getElementById("taskStat").textContent=`${n}/6 आज के tasks`;
+const acc=state.attempted?Math.round(state.correct/state.attempted*100):0;document.getElementById("mcqBar").style.width=acc+"%";document.getElementById("mcqStat").textContent=`${state.correct}/${state.attempted} सही (${acc}%)`;
+}
+function toggleTask(i){state.done=state.done.includes(i)?state.done.filter(x=>x!==i):[...state.done,i];save()}
+const qs=[
+{q:"भारतीय संविधान में मौलिक अधिकार किस भाग में हैं?",o:["भाग I","भाग II","भाग III","भाग IV"],a:2},
+{q:"राजस्थान का एकीकरण किससे संबंधित है?",o:["राज्यों के पुनर्गठन/एकीकरण की प्रक्रिया","हरित क्रांति","पंचायती राज का प्रारंभ","बैंक राष्ट्रीयकरण"],a:0},
+{q:"भारत में मानसून का प्रमुख स्वरूप क्या है?",o:["स्थायी पश्चिमी पवन","ऋतु के अनुसार पवनों का उलटाव","केवल स्थानीय पवन","ध्रुवीय पवन"],a:1},
+{q:"NCERT का उपयोग RAS तैयारी में सबसे अच्छा किस लिए किया जा सकता है?",o:["केवल current affairs","basic concepts मजबूत करने के लिए","सिर्फ essay writing","केवल mock test"],a:1},
+{q:"यदि किसी प्रश्न में 1/3 negative marking हो, तो blind guessing का जोखिम क्या है?",o:["कोई जोखिम नहीं","गलत उत्तर पर marks कट सकते हैं","सही उत्तर भी कटेगा","समय नहीं लगेगा"],a:1},
+{q:"PYQ analysis का सबसे उपयोगी उद्देश्य क्या है?",o:["सिर्फ answers याद करना","question themes और demand समझना","सिर्फ paper download करना","किताबें बढ़ाना"],a:1}
+];
+function resetQuiz(){document.getElementById("score").textContent="";const box=document.getElementById("quiz");box.innerHTML="";qs.forEach((x,qi)=>{const d=document.createElement("div");d.className="mcq";d.innerHTML=`<b>${qi+1}. ${x.q}</b>`;x.o.forEach((op,oi)=>{const b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+oi)+". "+op;b.onclick=()=>answer(b,qi,oi);d.appendChild(b)});box.appendChild(d)})}
+function answer(btn,qi,oi){const d=btn.parentElement;if(d.dataset.done)return;d.dataset.done="1";state.attempted++;if(oi===qs[qi].a){btn.classList.add("correct");state.correct++}else{btn.classList.add("wrong");[...d.querySelectorAll(".option")][qs[qi].a].classList.add("correct")}save();document.getElementById("score").textContent=`Score: ${state.correct}/${state.attempted}`}
+function clearData(){if(confirm("Progress reset करें?")){state={"done":[],"attempted":0,"correct":0};save();resetQuiz()}}
+function showTab(id,btn){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));btn.classList.add("active")}
+render();resetQuiz();
+</script>
+</body>
+</html>
