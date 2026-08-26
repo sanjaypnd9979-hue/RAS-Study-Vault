@@ -1,5 +1,5 @@
 
-.github/workflowsname: Deploy RAS Study Vault
+Deploy RAS Study Vault
 
 on:
   push:
