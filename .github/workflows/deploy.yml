@@ -1,5 +1,5 @@
 
-Deploy RAS Study Vault
+name: Deploy RAS Study Vault
 
 on:
   push:
