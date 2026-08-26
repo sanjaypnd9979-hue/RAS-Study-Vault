@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Naam Jaap Counter</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+.header{
+    background:#1456c3;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+.container{
+    max-width:800px;
+    margin:30px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    margin-bottom:20px;
+    border-radius:15px;
+    box-shadow:0 3px 15px rgba(0,0,0,.1);
+}
+
+.number{
+    font-size:45px;
+    font-weight:bold;
+    text-align:center;
+    margin:20px;
+}
+
+button{
+    padding:14px 20px;
+    margin:5px;
+    border:0;
+    border-radius:8px;
+    background:#1456c3;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.reset{
+    background:#64748b;
+}
+
+.progress{
+    height:20px;
+    background:#e5e7eb;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:#1456c3;
+}
+
+input{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+a{
+    color:#1456c3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>🙏 Naam Jaap</h1>
+
+<p>35 साल • 4 करोड़ लक्ष्य</p>
+
+</div>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h2>🎯 लक्ष्य</h2>
+
+<p>
+कुल लक्ष्य:
+<b>4,00,00,000</b>
+</p>
+
+<p>
+दैनिक लक्ष्य:
+<b>3,200</b>
+</p>
+
+<p>
+अवधि:
+<b>35 साल</b>
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>आज की गिनती</h2>
+
+<div class="number" id="today">
+0
+</div>
+
+<center>
+
+<button onclick="add(1)">
++1
+</button>
+
+<button onclick="add(108)">
++108
+</button>
+
+<button onclick="add(1008)">
++1008
+</button>
+
+<button onclick="resetToday()" class="reset">
+आज Reset
+</button>
+
+</center>
+
+<br>
+
+<p>
+आज का लक्ष्य: 3,200
+</p>
+
+<div class="progress">
+
+<div class="bar" id="todayBar"></div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📊 कुल Naam Jaap</h2>
+
+<div class="number" id="total">
+0
+</div>
+
+<div class="progress">
+
+<div class="bar" id="totalBar"></div>
+
+</div>
+
+<p id="percent">
+0%
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>💾 Backup</h2>
+
+<button onclick="backup()">
+Backup डाउनलोड
+</button>
+
+<br><br>
+
+<input
+type="file"
+accept=".json"
+onchange="restore(event)"
+>
+
+<p>
+Backup file को दूसरे मोबाइल में रखकर
+data वापस लाया जा सकता है।
+</p>
+
+</div>
+
+
+<div class="card">
+
+<a href="../index.html">
+← RAS Study Vault पर वापस जाएँ
+</a>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+const KEY = "RAS_NAAM_JAAP_DATA";
+
+let data =
+JSON.parse(
+localStorage.getItem(KEY)
+||
+'{"total":0,"today":0,"date":""}'
+);
+
+
+function todayDate(){
+
+return new Date()
+.toISOString()
+.slice(0,10);
+
+}
+
+
+if(data.date !== todayDate()){
+
+data.today = 0;
+
+data.date = todayDate();
+
+save();
+
+}
+
+
+function save(){
+
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+
+display();
+
+}
+
+
+function add(number){
+
+data.today += number;
+
+data.total += number;
+
+save();
+
+}
+
+
+function resetToday(){
+
+data.total =
+Math.max(
+0,
+data.total - data.today
+);
+
+data.today = 0;
+
+save();
+
+}
+
+
+function display(){
+
+document.getElementById("today")
+.innerText =
+data.today.toLocaleString("en-IN");
+
+
+document.getElementById("total")
+.innerText =
+data.total.toLocaleString("en-IN");
+
+
+let todayPercent =
+Math.min(
+100,
+(data.today / 3200) * 100
+);
+
+
+document.getElementById("todayBar")
+.style.width =
+todayPercent + "%";
+
+
+let totalPercent =
+Math.min(
+100,
+(data.total / 40000000) * 100
+);
+
+
+document.getElementById("totalBar")
+.style.width =
+totalPercent + "%";
+
+
+document.getElementById("percent")
+.innerText =
+totalPercent.toFixed(4) + "%";
+
+}
+
+
+function backup(){
+
+let file =
+new Blob(
+[
+JSON.stringify(data,null,2)
+],
+{
+type:"application/json"
+}
+);
+
+
+let link =
+document.createElement("a");
+
+link.href =
+URL.createObjectURL(file);
+
+link.download =
+"naam-jaap-backup.json";
+
+link.click();
+
+}
+
+
+function restore(event){
+
+let file =
+event.target.files[0];
+
+if(!file)
+return;
+
+
+let reader =
+new FileReader();
+
+
+reader.onload =
+function(){
+
+try{
+
+data =
+JSON.parse(reader.result);
+
+save();
+
+alert(
+"Backup successfully restore ho gaya."
+);
+
+}
+
+catch(error){
+
+alert(
+"Backup file galat hai."
+);
+
+}
+
+};
+
+Sam, [26-08-2026 05:26 PM]
+reader.readAsText(file);
+
+}
+
+
+display();
+
+</script>
+
+</body>
+
+</html>
